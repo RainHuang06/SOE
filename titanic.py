@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -17,7 +18,9 @@ TEST_SIZE = 0.2
 ITERATIONS = 500
 
 # Setting up data
-df = pd.read_csv("~/machinelearning/Downloads/Titanic-Dataset.csv") # Replace with file path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(current_dir, "Downloads", "Titanic-Dataset.csv")
+df = pd.read_csv(file_path)
 def preprocess_data(df):
     df = df.drop(columns=["Cabin", "Ticket", "PassengerId"])
     df["Sex"] = df["Sex"].map({"male": 1, "female": 0})
