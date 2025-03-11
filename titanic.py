@@ -34,7 +34,7 @@ def preprocess_data(df):
     "Rev": 2,
     "Dr": 2,
     "Mme": 6,
-    "Ms": 1,
+    "Ms": 6,
     "Major": 2,
     "Mlle": 5,
     "Col": 2,
@@ -43,7 +43,8 @@ def preprocess_data(df):
     "Jonkheer": 3
     }
     df["Title"] = df["Title"].map(title_map)
-    df["Title"] = df["Title"].fillna(4)
+    df.loc[df["Title"].isna() & (df["Sex"] == 0), "Title"] = 6  # Default to "Mrs" (6) for missing female titles
+    df.loc[df["Title"].isna() & (df["Sex"] == 1), "Title"] = 5  # "Master" for males
     df["Embarked"] = df["Embarked"].map({"C": 3, "Q": 1, "S": 0})
     df["Embarked"] = df["Embarked"].fillna(0)
     df["Pclass"] = df["Pclass"].map({3: 3, 2: 1, 1: 0})
